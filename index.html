@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gerador de Cartão de Confirmação</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<section class="form-container">
+    <h2>Dados do curso</h2>
+
+    <form id="cursoForm">
+        <label>
+            Nome do curso
+            <input type="text" id="nomeCurso" required />
+        </label>
+
+        <label>
+            Data
+            <input type="text" id="dataCurso" required />
+        </label>
+
+        <label>
+            Horário
+            <input type="text" id="horarioCurso" required />
+        </label>
+
+        <label>
+            Local
+            <textarea id="localCurso" rows="3" required></textarea>
+        </label>
+
+        <label>
+            O curso possui pré‑requisitos?
+            <select id="temPrerequisito">
+                <option value="nao">Não</option>
+                <option value="sim">Sim</option>
+            </select>
+        </label>
+
+        <label id="prerequisitoContainer" class="hidden">
+            Informe os pré‑requisitos
+            <textarea id="prerequisitoCurso" rows="3"></textarea>
+        </label>
+
+        <button type="submit">Gerar confirmação</button>
+    </form>
+</section>
+
+<section id="resultado" class="hidden">
+    <div class="resultado-grid">
+
+        <main class="container" id="cartao">
+            <header class="top">
+                <div class="logo">UniBB</div>
+                <h1>
+                    Olá! Sua participação no curso
+                    <strong id="cursoTitulo"></strong> está confirmada!
+                </h1>
+            </header>
+
+            <!-- INFORMAÇÕES PRINCIPAIS -->
+            <section class="box info">
+                <p><strong>DATA:</strong> <span id="cursoData"></span></p>
+                <p><strong>HORÁRIO:</strong> <span id="cursoHorario"></span></p>
+                <p><strong>LOCAL:</strong> <span id="cursoLocal"></span></p>
+            </section>
+
+            <!-- ✅ PRÉ‑REQUISITOS EM SEÇÃO PRÓPRIA -->
+            <section id="boxPrerequisito" class="box info hidden">
+                <p><strong>PRÉ‑REQUISITOS PARA PARTICIPAÇÃO:</strong></p>
+                <p id="cursoPrerequisito"></p>
+            </section>
+
+            <section class="box details">
+                <p>Para os participantes que informaram previamente a necessidade de hospedagem:</p>
+                <p>- A reserva será efetuada por esta Gepes e enviada por e-mail aos participantes, não sendo necessário nenhum procedimento.</p>
+                <p>Deslocamento Terrestre:</p>                
+                <p>- O deslocamento terrestre deverá ocorrer em dia útil e dentro da jornada de trabalho.</p>
+                <p>- Verbas para viagem corporativa conforme IN-377-1 item 6.9.</p>                
+                <p><strong>- Prefixo para débito das despesas: 8677 – DIPES.</strong></p>
+            </section>
+
+            <section class="box alert">
+                <p>Situação FIP/Ponto: 27X, onde X é a quantidade de horas de treinamento no dia.</p>
+                <p>Obrigatório o uso de crachá e orientamos levar seu copo para consumo de café e garrafa ou copo para consumo de água.</p>
+                <p><strong>Ausências sem justificativa serão tratadas como Desvio de Comportamento, nos termos da IN 383-1, item 4.</strong></p>
+            </section>
+
+            <footer class="footer">
+                <p><strong>Gepes BH</strong></p>
+                <p>Gepes Especializada</p>
+                <p>Belo Horizonte</p>
+            </footer>
+        </main>
+
+        <aside class="email-container">
+            <button id="btnImagem">Gerar imagem (.JPG)</button>
+            <button id="btnCopiarEmail">Copiar texto do e-mail</button>
+            <button id="btnAlterarCor">Alterar cor do convite</button>
+
+            <h3>Título do e-mail</h3>
+            <textarea id="emailCorpo" rows="1"></textarea>
+
+            <h3>Texto e descrição da imagem (acessibilidade)</h3>
+            <textarea id="descricaoImagem" rows="25"></textarea>
+        </aside>
+
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -84,7 +84,7 @@ Atenciosamente,
 Gepes Especializada Belo Horizonte
 
 #Paratodosverem
-Card digital de confirmação de curso em fundo azul escuro, com as instruções:
+Card digital de confirmação de curso com as instruções:
 Para os participantes que informaram previamente a necessidade de hospedagem:
 A reserva será efetuada por esta Gepes e enviada por e-mail aos participantes, não sendo necessário nenhum procedimento.
 Deslocamento Terrestre:

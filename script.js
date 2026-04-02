@@ -84,13 +84,13 @@ Atenciosamente,
 Gepes Especializada Belo Horizonte
 
 #Paratodosverem
-Card digital de confirmação de curso com as instruções:
+Card digital de confirmação de curso com as instruções.
 Para os participantes que informaram previamente a necessidade de hospedagem:
-A reserva será efetuada por esta Gepes e enviada por e-mail aos participantes, não sendo necessário nenhum procedimento.
+- A reserva será efetuada por esta Gepes e enviada por e-mail aos participantes, não sendo necessário nenhum procedimento.
 Deslocamento Terrestre:
-O deslocamento terrestre deverá ocorrer em dia útil e dentro da jornada de trabalho.
-Verbas para viagem corporativa conforme IN-377-1 item 6.9.
-Prefixo para débito das despesas: 8677 – DIPES.
+- O deslocamento terrestre deverá ocorrer em dia útil e dentro da jornada de trabalho.
+- Verbas para viagem corporativa conforme IN-377-1 item 6.9.
+- Prefixo para débito das despesas: 8677 – DIPES.
 Situação FIP/ Ponto Eletrônico: 27X, onde X é o número de horas de treinamento no dia.
 Obrigatório o uso de crachá e orientamos levar seu copo para consumo de café e garrafa ou copo para consumo de água.
 Ausências sem justificativa serão tratadas como Desvio de Comportamento, nos termos da IN 383-1, item 4.

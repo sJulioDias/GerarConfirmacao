@@ -1,3 +1,4 @@
+
 const form = document.getElementById("cursoForm");
 const resultado = document.getElementById("resultado");
 const btnImagem = document.getElementById("btnImagem");
@@ -134,3 +135,10 @@ btnAlterarCor.addEventListener("click", () => {
     cartao.style.background = cores[indiceCor];
 });
 
+// INPUT COLOR PARA PERSONALIZAÇÃO
+const colorPicker = document.getElementById("colorPicker");
+
+colorPicker.addEventListener("input", () => {
+    const corEscolhida = colorPicker.value;
+    cartao.style.background = corEscolhida;
+});

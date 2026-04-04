@@ -80,10 +80,6 @@ Sua participação no curso "${curso}" está confirmada.
 ⏰ Horário: ${horario}
 📍 Local: ${local}${bloco}
 
-Atenciosamente,
-
-Gepes Especializada Belo Horizonte
-
 #Paratodosverem
 Card digital de confirmação de curso com as instruções.
 Para os participantes que informaram previamente a necessidade de hospedagem:
@@ -95,6 +91,10 @@ Deslocamento Terrestre:
 Situação FIP/ Ponto Eletrônico: 27X, onde X é o número de horas de treinamento no dia.
 Obrigatório o uso de crachá e orientamos levar seu copo para consumo de café e garrafa ou copo para consumo de água.
 Ausências sem justificativa serão tratadas como Desvio de Comportamento, nos termos da IN 383-1, item 4.
+
+Atenciosamente,
+
+Gepes Especializada Belo Horizonte
 
 `.trim();
 }

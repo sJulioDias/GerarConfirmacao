@@ -145,3 +145,28 @@ body {
     cursor: pointer;
     border: none;
 }
+
+/* Destacar os títulos principais */
+.info strong {
+    color: #ffeb00;
+    font-weight: bold;
+}
+
+/* Destacar o logo UniBB */
+.logo {
+    color: #ffeb00;
+    font-weight: bold;
+}
+
+/* Destacar o nome do curso */
+#cursoTitulo {
+    color: #ffeb00;
+    font-weight: bold;
+}
+
+/* Destacar o Gepes BH no rodapé */
+.footer strong {
+    color: #ffeb00;
+    font-weight: bold;
+}
+

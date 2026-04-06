@@ -41,8 +41,15 @@
         </label>
 
         <label id="prerequisitoContainer" class="hidden">
-            Informe os pré‑requisitos
+            Informe os pré‑requisitos:
             <textarea id="prerequisitoCurso" rows="3"></textarea>
+        </label>
+
+        <!-- NOVA CHAVE DE DESLOCAMENTO -->
+         <p>Ativar/Desativar Seção de Deslocamento</p>
+        <label class="switch">
+            <input type="checkbox" id="ativarDeslocamento" checked>
+            <span class="slider round"></span>
         </label>
 
         <button type="submit">Gerar confirmação</button>
@@ -74,7 +81,8 @@
                 <p id="cursoPrerequisito"></p>
             </section>
 
-            <section class="box details">
+            <!-- ✅ SEÇÃO DE DESLOCAMENTO COM ID -->
+            <section id="boxDeslocamento" class="box details">
                 <p>Para os participantes que informaram previamente a necessidade de hospedagem:</p>
                 <p>- A reserva será efetuada por esta Gepes e enviada por e-mail aos participantes, não sendo necessário nenhum procedimento.</p>
                 <p>Deslocamento Terrestre:</p>                
@@ -91,7 +99,6 @@
                 <p><span class="destaque">Ausências sem justificativa serão tratadas como Desvio de Comportamento, nos termos da IN 383-1, item 4.</span></p>
             </section>
 
-
             <footer class="footer">
                 <p><strong>Gepes BH</strong></p>
                 <p>Gepes Especializada</p>
@@ -105,7 +112,6 @@
             <button id="btnAlterarCor">Alterar cor do cartão</button>
             <label for="colorPicker">Escolher cor personalizada:</label>
             <input type="color" id="colorPicker" value="#022c4a">
-
 
             <h3>Título do e-mail</h3>
             <textarea id="emailCorpo" rows="1"></textarea>

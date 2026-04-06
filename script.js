@@ -1,4 +1,3 @@
-
 const form = document.getElementById("cursoForm");
 const resultado = document.getElementById("resultado");
 const btnImagem = document.getElementById("btnImagem");
@@ -6,6 +5,10 @@ const btnImagem = document.getElementById("btnImagem");
 const selectPrereq = document.getElementById("temPrerequisito");
 const prereqContainer = document.getElementById("prerequisitoContainer");
 const boxPrereq = document.getElementById("boxPrerequisito");
+
+// NOVO: checkbox de deslocamento
+const deslocamentoToggle = document.getElementById("ativarDeslocamento");
+const boxDeslocamento = document.getElementById("boxDeslocamento");
 
 selectPrereq.addEventListener("change", () => {
     if (selectPrereq.value === "sim") {
@@ -19,11 +22,22 @@ selectPrereq.addEventListener("change", () => {
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    // ✅ Verificação obrigatória de pré-requisitos
+    if (selectPrereq.value === "sim") {
+        const prerequisitoObrigatorio = value("prerequisitoCurso").trim();
+        if (!prerequisitoObrigatorio) {
+            alert("Por favor, informe os pré‑requisitos para participação no curso.");
+            document.getElementById("prerequisitoCurso").focus();
+            return; // interrompe o envio
+        }
+    }
+
     const curso = value("nomeCurso");
     const data = value("dataCurso");
     const horario = value("horarioCurso");
     const local = value("localCurso");
     const prerequisito = value("prerequisitoCurso");
+    const deslocamentoAtivo = deslocamentoToggle.checked;
 
     text("cursoTitulo", curso);
     text("cursoData", data);
@@ -37,8 +51,15 @@ form.addEventListener("submit", (e) => {
         boxPrereq.classList.add("hidden");
     }
 
-    gerarEmail(curso, data, horario, local, prerequisito);
-    gerarDescricao(curso, data, horario, local, prerequisito);
+    // Mostrar ou ocultar seção de deslocamento
+    if (deslocamentoAtivo) {
+        boxDeslocamento.classList.remove("hidden");
+    } else {
+        boxDeslocamento.classList.add("hidden");
+    }
+
+    gerarEmail(curso, data, horario, local, prerequisito, deslocamentoAtivo);
+    gerarDescricao(curso, data, horario, local, prerequisito, deslocamentoAtivo);
 
     resultado.classList.remove("hidden");
     resultado.scrollIntoView({ behavior: "smooth" });
@@ -65,29 +86,29 @@ Confirmação de participação no curso ${curso} - ${data}
 `.trim();
 }
 
-function gerarDescricao(curso, data, horario, local, prereq) {
-    const bloco = prereq
-        ?`\n\n📌Pré-requisitos: ${prereq}.`
-        : "";
+function gerarDescricao(curso, data, horario, local, prereq, deslocamentoAtivo) {
+    const blocoPrereq = prereq ? `\n\n📌Pré-requisitos: ${prereq}.` : "";
+    const blocoDeslocamento = deslocamentoAtivo ? `
+Para os participantes que informaram previamente a necessidade de hospedagem:
+- A reserva será efetuada por esta Gepes e enviada por e-mail aos participantes.
+Deslocamento Terrestre:
+- O deslocamento terrestre deverá ocorrer em dia útil e dentro da jornada de trabalho.
+- Verbas para viagem corporativa conforme IN-377-1 item 6.9.
+- Prefixo para débito das despesas: 8677 – DIPES.
+` : "";
 
     document.getElementById("descricaoImagem").value = `
-
 Olá!
 
 Sua participação no curso "${curso}" está confirmada.
 
 📅 Data: ${data}
 ⏰ Horário: ${horario}
-📍 Local: ${local}${bloco}
+📍 Local: ${local}${blocoPrereq}
 
 #Paratodosverem
 Card digital de confirmação de curso com as instruções.
-Para os participantes que informaram previamente a necessidade de hospedagem:
-- A reserva será efetuada por esta Gepes e enviada por e-mail aos participantes, não sendo necessário nenhum procedimento.
-Deslocamento Terrestre:
-- O deslocamento terrestre deverá ocorrer em dia útil e dentro da jornada de trabalho.
-- Verbas para viagem corporativa conforme IN-377-1 item 6.9.
-- Prefixo para débito das despesas: 8677 – DIPES.
+${blocoDeslocamento}
 Situação FIP/ Ponto Eletrônico: 27X, onde X é o número de horas de treinamento no dia.
 Obrigatório o uso de crachá e orientamos levar seu copo para consumo de café e garrafa ou copo para consumo de água.
 Ausências sem justificativa serão tratadas como Desvio de Comportamento, nos termos da IN 383-1, item 4.
@@ -95,7 +116,6 @@ Ausências sem justificativa serão tratadas como Desvio de Comportamento, nos t
 Atenciosamente,
 
 Gepes Especializada Belo Horizonte
-
 `.trim();
 }
 

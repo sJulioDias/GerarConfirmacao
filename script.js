@@ -66,9 +66,14 @@ form.addEventListener("submit", (e) => {
 });
 
 btnImagem.addEventListener("click", () => {
-    html2canvas(document.getElementById("cartao"), {
+    const cartaoElemento = document.getElementById("cartao");
+    
+    // Captura a cor exata que o usuário está vendo na tela no momento
+    const corDeFundoAtual = window.getComputedStyle(cartaoElemento).backgroundColor;
+
+    html2canvas(cartaoElemento, {
         scale: 2,
-        backgroundColor: "#062f4f"
+        backgroundColor: corDeFundoAtual // Usa a cor dinâmica em vez de uma fixa
     }).then(canvas => {
         const link = document.createElement("a");
         link.download = "cartao-confirmacao.jpg";

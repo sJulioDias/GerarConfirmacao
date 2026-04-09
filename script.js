@@ -120,7 +120,7 @@ Ausências sem justificativa serão tratadas como Desvio de Comportamento, nos t
 
 Atenciosamente,
 
-Gepes Especializada Belo Horizonte
+Gepes Especializada Educação e Seleção
 `.trim();
 }
 

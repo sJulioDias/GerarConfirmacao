@@ -167,3 +167,29 @@ colorPicker.addEventListener("input", () => {
     const corEscolhida = colorPicker.value;
     cartao.style.background = corEscolhida;
 });
+
+const btnCompartilharEmail = document.getElementById("btnCompartilharEmail");
+
+btnCompartilharEmail.addEventListener("click", () => {
+    const cartaoElemento = document.getElementById("cartao");
+
+    html2canvas(cartaoElemento, { scale: 2 }).then(canvas => {
+        // Copia a imagem para a área de transferência
+        canvas.toBlob(blob => {
+            const item = new ClipboardItem({ "image/png": blob });
+            navigator.clipboard.write([item]).then(() => {
+                // Pega o título e o texto já gerados
+                const tituloEmail = document.getElementById("emailCorpo").value || "Confirmação de participação no curso";
+                const corpoEmail = document.getElementById("descricaoImagem").value;
+
+                // Abre o cliente de e-mail com título e corpo preenchidos
+                const assunto = encodeURIComponent(tituloEmail);
+                const corpo = encodeURIComponent(corpoEmail);
+                window.location.href = `mailto:?subject=${assunto}&body=${corpo}`;
+            }).catch(err => {
+                console.error("Erro ao copiar imagem: ", err);
+                alert("Não foi possível copiar a imagem automaticamente. Ela pode ser salva manualmente.");
+            });
+        });
+    });
+});

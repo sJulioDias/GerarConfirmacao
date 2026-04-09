@@ -83,7 +83,7 @@ body {
 .container {
     background: linear-gradient(160deg, #062f4f, #04324f);
     padding: 20px;
-    border-radius: 16px;
+    /* border-radius: 16px; */
 }
 
 .box {

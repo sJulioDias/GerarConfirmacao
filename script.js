@@ -178,6 +178,7 @@ btnCompartilharEmail.addEventListener("click", () => {
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ "image/png": blob });
             navigator.clipboard.write([item]).then(() => {
+                alert("Imagem copiada! Agora cole no corpo do e-mail.");
                 // Pega o título e o texto já gerados
                 const tituloEmail = document.getElementById("emailCorpo").value || "Confirmação de participação no curso";
                 const corpoEmail = document.getElementById("descricaoImagem").value;

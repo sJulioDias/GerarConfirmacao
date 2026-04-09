@@ -103,6 +103,9 @@ Deslocamento Terrestre:
 ` : "";
 
     document.getElementById("descricaoImagem").value = `
+#Paratodosverem
+Card digital de confirmação de curso com as instruções.
+
 Olá!
 
 Sua participação no curso "${curso}" está confirmada.
@@ -111,8 +114,6 @@ Sua participação no curso "${curso}" está confirmada.
 ⏰ Horário: ${horario}
 📍 Local: ${local}${blocoPrereq}
 
-#Paratodosverem
-Card digital de confirmação de curso com as instruções.
 ${blocoDeslocamento}
 Situação FIP/ Ponto Eletrônico: 27X, onde X é o número de horas de treinamento no dia.
 Obrigatório o uso de crachá e orientamos levar seu copo para consumo de café e garrafa ou copo para consumo de água.

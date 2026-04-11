@@ -35,7 +35,9 @@ form.addEventListener("submit", (e) => {
     const curso = value("nomeCurso");
     const data = value("dataCurso");
     const horario = value("horarioCurso");
-    const local = value("localCurso");
+    const endereco = value("enderecoSala");
+    const cidadeUF = value("cidadeUF");
+    const local = `${endereco} - ${cidadeUF}`;
     const prerequisito = value("prerequisitoCurso");
     const deslocamentoAtivo = deslocamentoToggle.checked;
 
@@ -58,7 +60,7 @@ form.addEventListener("submit", (e) => {
         boxDeslocamento.classList.add("hidden");
     }
 
-    gerarEmail(curso, data, horario, local, prerequisito, deslocamentoAtivo);
+    gerarEmail(curso, data, horario, local, prerequisito, cidadeUF);
     gerarDescricao(curso, data, horario, local, prerequisito, deslocamentoAtivo);
 
     resultado.classList.remove("hidden");
@@ -68,12 +70,11 @@ form.addEventListener("submit", (e) => {
 btnImagem.addEventListener("click", () => {
     const cartaoElemento = document.getElementById("cartao");
     
-    // Captura a cor exata que o usuário está vendo na tela no momento
     const corDeFundoAtual = window.getComputedStyle(cartaoElemento).backgroundColor;
 
     html2canvas(cartaoElemento, {
         scale: 2,
-        backgroundColor: corDeFundoAtual // Usa a cor dinâmica em vez de uma fixa
+        backgroundColor: corDeFundoAtual
     }).then(canvas => {
         const link = document.createElement("a");
         link.download = "cartao-confirmacao.jpg";
@@ -82,12 +83,11 @@ btnImagem.addEventListener("click", () => {
     });
 });
 
-function gerarEmail(curso, data, horario, local, prereq) {
+function gerarEmail(curso, data, horario, local, prereq, cidadeUF) {
     const bloco = prereq ? `\n📌 Pré‑requisitos: ${prereq}\n` : "";
 
     document.getElementById("emailCorpo").value = `
-Confirmação de participação no curso ${curso} - ${data}
-
+Confirmação de participação no curso ${curso} - ${data} - ${cidadeUF}
 `.trim();
 }
 
@@ -113,7 +113,6 @@ Sua participação no curso "${curso}" está confirmada.
 📅 Data: ${data}
 ⏰ Horário: ${horario}
 📍 Local: ${local}${blocoPrereq}
-
 ${blocoDeslocamento}
 Situação FIP/ Ponto Eletrônico: 27X, onde X é o número de horas de treinamento no dia.
 Obrigatório o uso de crachá e orientamos levar seu copo para consumo de café e garrafa ou copo para consumo de água.
@@ -161,7 +160,6 @@ btnAlterarCor.addEventListener("click", () => {
     cartao.style.background = cores[indiceCor];
 });
 
-// INPUT COLOR PARA PERSONALIZAÇÃO
 const colorPicker = document.getElementById("colorPicker");
 
 colorPicker.addEventListener("input", () => {
@@ -175,16 +173,13 @@ btnCompartilharEmail.addEventListener("click", () => {
     const cartaoElemento = document.getElementById("cartao");
 
     html2canvas(cartaoElemento, { scale: 2 }).then(canvas => {
-        // Copia a imagem para a área de transferência
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ "image/png": blob });
             navigator.clipboard.write([item]).then(() => {
                 alert("Imagem copiada! Agora cole no corpo do e-mail.");
-                // Pega o título e o texto já gerados
                 const tituloEmail = document.getElementById("emailCorpo").value || "Confirmação de participação no curso";
                 const corpoEmail = document.getElementById("descricaoImagem").value;
 
-                // Abre o cliente de e-mail com título e corpo preenchidos
                 const assunto = encodeURIComponent(tituloEmail);
                 const corpo = encodeURIComponent(corpoEmail);
                 window.location.href = `mailto:?subject=${assunto}&body=${corpo}`;

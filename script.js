@@ -1,219 +1,192 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-}
+const form = document.getElementById("cursoForm");
+const resultado = document.getElementById("resultado");
+const btnImagem = document.getElementById("btnImagem");
 
-body {
-    background: linear-gradient(160deg, #062f4f, #04324f);
-    color: #fff;
-    padding: 20px;
-}
+const selectPrereq = document.getElementById("temPrerequisito");
+const prereqContainer = document.getElementById("prerequisitoContainer");
+const boxPrereq = document.getElementById("boxPrerequisito");
 
-.hidden {
-    display: none;
-}
+// NOVO: checkbox de deslocamento
+const deslocamentoToggle = document.getElementById("ativarDeslocamento");
+const boxDeslocamento = document.getElementById("boxDeslocamento");
 
-/* HEADER DO CARTÃO */
-.top {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    position: relative;
-}
-
-/* Alinha UniBB e Logo na mesma linha à direita e centralizados entre si */
-.header-right {
-    display: flex;
-    align-items: center;    /* Centraliza verticalmente o texto com a imagem */
-    justify-content: flex-end;
-    gap: 8px; 
-    width: 100%;
-    margin-bottom: 15px;
-}
-
-.logo {
-    color: #ffeb00;
-    font-weight: bold;
-    font-size: 1.1rem;
-    line-height: 1;         /* Remove espaços extras de linha do texto */
-    margin: 0;
-}
-
-img {
-    width: 20px;            /* Tamanho fixo para evitar distorção no canvas */
-    height: auto;
-    display: block;         /* Remove o espaço vazio na base da imagem */
-}
-
-.top h1 {
-    text-align: center;
-    font-size: 1.4rem;
-    line-height: 1.3;
-}
-
-/* FORMULÁRIO */
-.form-container {
-    max-width: 420px;
-    margin: 0 auto;
-    background: #fff;
-    color: #000;
-    padding: 20px;
-    border-radius: 12px;
-}
-
-.form-container h2 {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.form-container label {
-    display: block;
-    margin-bottom: 12px;
-}
-
-.form-container input,
-.form-container textarea,
-.form-container select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 4px;
-}
-
-.form-container button {
-    width: 100%;
-    padding: 10px;
-    background: #04324f;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-/* RESULTADO E GRID */
-.resultado-grid {
-    margin-top: 30px;
-    display: grid;
-    grid-template-columns: 420px 1fr;
-    gap: 30px;
-    justify-content: center;
-}
-
-/* CARD VISUAL (O elemento que será capturado) */
-.container {
-    background: linear-gradient(160deg, #062f4f, #04324f);
-    padding: 20px;
-    width: 420px;           /* Largura fixa ajuda na precisão do html2canvas */
-    overflow: hidden;       /* Evita que elementos vazem no print */
-}
-
-.box {
-    border: 2px solid #fff;
-    border-radius: 20px;
-    padding: 16px;
-    margin-bottom: 16px;
-    font-size: 14px;
-}
-
-.info strong, #cursoTitulo, .destaque {
-    color: #ffeb00;
-    font-weight: bold;
-}
-
-.footer {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.footer strong {
-    color: #ffeb00;
-    font-weight: bold;
-}
-
-/* LATERAL DIREITA (AÇÕES) */
-.email-container {
-    background: linear-gradient(160deg, #0b4a75, #0f5e94);
-    padding: 20px;
-    border-radius: 12px;
-}
-
-.email-container button {
-    width: 100%;
-    padding: 10px;
-    background: #032a43;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px;
-    border-radius: 4px;
-}
-
-.email-container textarea {
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 6px;
-    color: #000;
-}
-
-#colorPicker {
-    margin-top: 5px;
-    margin-bottom: 15px;
-    width: 100%;
-    height: 40px;
-    cursor: pointer;
-    border: none;
-}
-
-/* SWITCH TOGGLE */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 24px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 24px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 18px; width: 18px;
-    left: 3px; bottom: 3px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-color: #04324f;
-}
-
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-
-/* RESPONSIVIDADE */
-@media (max-width: 900px) {
-    .resultado-grid {
-        grid-template-columns: 1fr;
+selectPrereq.addEventListener("change", () => {
+    if (selectPrereq.value === "sim") {
+        prereqContainer.classList.remove("hidden");
+    } else {
+        prereqContainer.classList.add("hidden");
+        document.getElementById("prerequisitoCurso").value = "";
     }
-    .container {
-        width: 100%;        /* No mobile o card ocupa a tela toda */
-        max-width: 420px;
+});
+
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // ✅ Verificação obrigatória de pré-requisitos
+    if (selectPrereq.value === "sim") {
+        const prerequisitoObrigatorio = value("prerequisitoCurso").trim();
+        if (!prerequisitoObrigatorio) {
+            alert("Por favor, informe os pré‑requisitos para participação no curso.");
+            document.getElementById("prerequisitoCurso").focus();
+            return; // interrompe o envio
+        }
     }
+
+    const curso = value("nomeCurso");
+    const data = value("dataCurso");
+    const horario = value("horarioCurso");
+    const endereco = value("enderecoSala");
+    const cidadeUF = value("cidadeUF");
+    const local = `${endereco} - ${cidadeUF}`;
+    const prerequisito = value("prerequisitoCurso");
+    const deslocamentoAtivo = deslocamentoToggle.checked;
+
+    text("cursoTitulo", curso);
+    text("cursoData", data);
+    text("cursoHorario", horario);
+    text("cursoLocal", local);
+
+    if (selectPrereq.value === "sim" && prerequisito.trim()) {
+        text("cursoPrerequisito", prerequisito);
+        boxPrereq.classList.remove("hidden");
+    } else {
+        boxPrereq.classList.add("hidden");
+    }
+
+    // Mostrar ou ocultar seção de deslocamento
+    if (deslocamentoAtivo) {
+        boxDeslocamento.classList.remove("hidden");
+    } else {
+        boxDeslocamento.classList.add("hidden");
+    }
+
+    gerarEmail(curso, data, horario, local, prerequisito, cidadeUF);
+    gerarDescricao(curso, data, horario, local, prerequisito, deslocamentoAtivo);
+
+    resultado.classList.remove("hidden");
+    resultado.scrollIntoView({ behavior: "smooth" });
+});
+
+btnImagem.addEventListener("click", () => {
+    const cartaoElemento = document.getElementById("cartao");
+    
+    const corDeFundoAtual = window.getComputedStyle(cartaoElemento).backgroundColor;
+
+    html2canvas(cartaoElemento, {
+        scale: 2,
+        backgroundColor: corDeFundoAtual
+    }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "cartao-confirmacao.jpg";
+        link.href = canvas.toDataURL("image/jpeg", 0.95);
+        link.click();
+    });
+});
+
+function gerarEmail(curso, data, horario, local, prereq, cidadeUF) {
+    const bloco = prereq ? `\n📌 Pré‑requisitos: ${prereq}\n` : "";
+
+    document.getElementById("emailCorpo").value = `
+Confirmação de participação no curso ${curso} - ${data} - ${cidadeUF}
+`.trim();
 }
+
+function gerarDescricao(curso, data, horario, local, prereq, deslocamentoAtivo) {
+    const blocoPrereq = prereq ? `\n\n📌Pré-requisitos: ${prereq}.` : "";
+    const blocoDeslocamento = deslocamentoAtivo ? `
+Para os participantes que informaram previamente a necessidade de hospedagem:
+- A reserva será efetuada por esta Gepes e enviada por e-mail aos participantes.
+Deslocamento Terrestre:
+- O deslocamento terrestre deverá ocorrer em dia útil e dentro da jornada de trabalho.
+- Verbas para viagem corporativa conforme IN-377-1 item 6.9.
+- Prefixo para débito das despesas: 8677 – DIPES.
+` : "";
+
+    document.getElementById("descricaoImagem").value = `
+#Paratodosverem
+Card digital de confirmação de curso com as instruções.
+
+Olá!
+
+Sua participação no curso "${curso}" está confirmada.
+
+📅 Data: ${data}
+⏰ Horário: ${horario}
+📍 Local: ${local}${blocoPrereq}
+${blocoDeslocamento}
+Situação FIP/ Ponto Eletrônico: 27X, onde X é o número de horas de treinamento no dia.
+Obrigatório o uso de crachá e orientamos levar seu copo para consumo de café e garrafa ou copo para consumo de água.
+Ausências sem justificativa serão tratadas como Desvio de Comportamento, nos termos da IN 383-1, item 4.
+
+Atenciosamente,
+
+Gepes Especializada Educação e Seleção
+`.trim();
+}
+
+function value(id) {
+    return document.getElementById(id).value;
+}
+
+function text(id, value) {
+    document.getElementById(id).textContent = value;
+}
+
+const btnCopiarEmail = document.getElementById("btnCopiarEmail");
+
+btnCopiarEmail.addEventListener("click", () => {
+    const emailTexto = document.getElementById("descricaoImagem").value;
+    navigator.clipboard.writeText(emailTexto).then(() => {
+        alert("Texto do e-mail copiado para a área de transferência!");
+    }).catch(err => {
+        console.error("Erro ao copiar texto: ", err);
+    });
+});
+
+const btnAlterarCor = document.getElementById("btnAlterarCor");
+const cartao = document.getElementById("cartao");
+
+const cores = [
+    "linear-gradient(160deg, #2c3e50, #000000)", // Grafite
+    "linear-gradient(160deg, #102a43, #243b55)", // Marinho
+    "linear-gradient(160deg, #0d324d, #1c1c1c)", // Petróleo
+    "linear-gradient(160deg, #bdc3c7, #2c3e50)"  // Prata/Escuro
+];
+
+let indiceCor = 0;
+
+btnAlterarCor.addEventListener("click", () => {
+    indiceCor = (indiceCor + 1) % cores.length;
+    cartao.style.background = cores[indiceCor];
+});
+
+const colorPicker = document.getElementById("colorPicker");
+
+colorPicker.addEventListener("input", () => {
+    const corEscolhida = colorPicker.value;
+    cartao.style.background = corEscolhida;
+});
+
+const btnCompartilharEmail = document.getElementById("btnCompartilharEmail");
+
+btnCompartilharEmail.addEventListener("click", () => {
+    const cartaoElemento = document.getElementById("cartao");
+
+    html2canvas(cartaoElemento, { scale: 2 }).then(canvas => {
+        canvas.toBlob(blob => {
+            const item = new ClipboardItem({ "image/png": blob });
+            navigator.clipboard.write([item]).then(() => {
+                alert("Imagem copiada! Agora cole no corpo do e-mail.");
+                const tituloEmail = document.getElementById("emailCorpo").value || "Confirmação de participação no curso";
+                const corpoEmail = document.getElementById("descricaoImagem").value;
+
+                const assunto = encodeURIComponent(tituloEmail);
+                const corpo = encodeURIComponent(corpoEmail);
+                window.location.href = `mailto:?subject=${assunto}&body=${corpo}`;
+            }).catch(err => {
+                console.error("Erro ao copiar imagem: ", err);
+                alert("Não foi possível copiar a imagem automaticamente. Ela pode ser salva manualmente.");
+            });
+        });
+    });
+});

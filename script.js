@@ -69,17 +69,28 @@ form.addEventListener("submit", (e) => {
 
 btnImagem.addEventListener("click", () => {
     const cartaoElemento = document.getElementById("cartao");
-    
     const corDeFundoAtual = window.getComputedStyle(cartaoElemento).backgroundColor;
 
     html2canvas(cartaoElemento, {
         scale: 2,
         backgroundColor: corDeFundoAtual
     }).then(canvas => {
+        // ✅ 1. Baixar a imagem
         const link = document.createElement("a");
         link.download = "cartao-confirmacao.jpg";
         link.href = canvas.toDataURL("image/jpeg", 0.95);
         link.click();
+
+        // ✅ 2. Copiar a imagem para a área de transferência
+        canvas.toBlob(blob => {
+            const item = new ClipboardItem({ "image/png": blob });
+            navigator.clipboard.write([item]).then(() => {
+                alert("Imagem copiada para a área de transferência!");
+            }).catch(err => {
+                console.error("Erro ao copiar imagem: ", err);
+                alert("Não foi possível copiar a imagem automaticamente. Você pode salvar manualmente.");
+            });
+        });
     });
 });
 

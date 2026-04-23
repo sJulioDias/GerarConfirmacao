@@ -47,7 +47,8 @@ form.addEventListener("submit", (e) => {
     text("cursoLocal", local);
 
     if (selectPrereq.value === "sim" && prerequisito.trim()) {
-        text("cursoPrerequisito", prerequisito);
+        const elemento = document.getElementById("cursoPrerequisito");
+        elemento.innerHTML = prerequisito.replace(/\n/g, "<br>");
         boxPrereq.classList.remove("hidden");
     } else {
         boxPrereq.classList.add("hidden");
